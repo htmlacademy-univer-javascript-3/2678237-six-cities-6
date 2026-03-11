@@ -1,11 +1,7 @@
-import {MainPage} from './pages/MainPage.tsx';
+import {Outlet} from 'react-router-dom';
 
-type MainPageProps = {
-  offersCount: number;
-};
-
-export default function App({offersCount} : MainPageProps) {
+export default function App() {
   return (
-    <MainPage offersCount={offersCount}/>
+    <Outlet />
   );
 }
