@@ -39,7 +39,7 @@ export function FavoritesPage() {
                   </Link>
                 </li>
                 <li className="header__nav-item">
-                  <Link to='/' className="header__nav-link">
+                  <Link to={AppRoute.Root} className="header__nav-link">
                     <span className="header__signout">Sign out</span>
                   </Link>
                 </li>
