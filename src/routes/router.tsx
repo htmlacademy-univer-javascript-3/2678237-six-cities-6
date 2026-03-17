@@ -1,17 +1,18 @@
 import {createBrowserRouter} from 'react-router-dom';
 import App from '../App.tsx';
-import {MainPage} from '../pages/MainPage.tsx';
-import {LoginPage} from '../pages/LoginPage.tsx';
-import {OfferPage} from '../pages/OfferPage.tsx';
+import {MainPage} from '../pages/MainPage/MainPage.tsx';
+import {LoginPage} from '../pages/LoginPage/LoginPage.tsx';
+import {OfferPage} from '../pages/OfferPage/OfferPage.tsx';
 import {NotFoundPage} from '../pages/NotFoundPage/NotFoundPage.tsx';
 import PrivateRoute from './privateRoute.tsx';
 import {AppRoute, AuthorizationStatus} from '../const.ts';
-import {FavoritesPage} from '../pages/FavoritesPage.tsx';
+import {FavoritesPage} from '../pages/FavoritesPage/FavoritesPage.tsx';
+import {Offers} from '../types/offer.ts';
 
-const router = createBrowserRouter([
+const getRouter = (offers: Offers) => createBrowserRouter([
   {
     path: AppRoute.Root,
-    element: <App/>,
+    element: <App offers={offers}/>,
     errorElement: <NotFoundPage/>,
     children: [
       {
@@ -19,13 +20,13 @@ const router = createBrowserRouter([
         element: <MainPage />
       },
       {
-        path: AppRoute.Offer,
+        path: `${AppRoute.Offer}/:id`,
         element: <OfferPage/>
       },
       {
         path: AppRoute.Favorites,
         element:
-          <PrivateRoute authStatus={AuthorizationStatus.NoAuth}>
+          <PrivateRoute authStatus={AuthorizationStatus.Auth}>
             <FavoritesPage/>
           </PrivateRoute>
       }
@@ -37,4 +38,4 @@ const router = createBrowserRouter([
   },
 ]);
 
-export default router;
+export default getRouter;
