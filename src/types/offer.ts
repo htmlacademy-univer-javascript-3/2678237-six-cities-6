@@ -1,3 +1,5 @@
+export type CardVariant = 'cities' | 'near';
+
 export type Location = {
   latitude: number;
   longitude: number;

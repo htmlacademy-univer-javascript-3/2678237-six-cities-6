@@ -1,19 +1,32 @@
-import {Offer} from '../../types/offer.ts';
+import {CardVariant, Offer} from '../../types/offer.ts';
 import {getRatingPercent} from '../../utils.ts';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const.ts';
 
 type OfferCardProps = {
   offer: Offer;
+  variant?: CardVariant;
   onCardHover?: (offer: Offer | null) => void;
 };
 
-export function OfferCard({offer, onCardHover} : OfferCardProps) {
+const cardConfig: Record<CardVariant, {article: string; imageWrapper: string}> = {
+  cities: {
+    article: 'cities__card place-card',
+    imageWrapper: 'cities__image-wrapper place-card__image-wrapper',
+  },
+  near: {
+    article: 'near-places__card place-card',
+    imageWrapper: 'near-places__image-wrapper place-card__image-wrapper',
+  }
+};
+
+export function OfferCard({offer, variant = 'cities', onCardHover} : OfferCardProps) {
   const ratingPercent = getRatingPercent(offer.rating);
+  const config = cardConfig[variant];
 
   return (
     <article
-      className="cities__card place-card"
+      className={config.article}
       onMouseEnter={() => onCardHover?.(offer)}
       onMouseLeave={() => onCardHover?.(null)}
     >
@@ -22,7 +35,7 @@ export function OfferCard({offer, onCardHover} : OfferCardProps) {
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={config.imageWrapper}>
         <Link to='#'>
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image"/>
         </Link>
