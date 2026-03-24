@@ -2,10 +2,12 @@ import {Link, useOutletContext} from 'react-router-dom';
 import {OffersList} from '../../components/OffersList/OffersList.tsx';
 import {Offer, Offers} from '../../types/offer.ts';
 import {useState} from 'react';
+import {Map} from '../../components/Map/Map.tsx';
+import {AMSTERDAM_CITY} from '../../mocks/offers.ts';
 import {AppRoute} from '../../const.ts';
 
 export function MainPage() {
-  const [, setActiveOffer] = useState<Offer | null>(null);
+  const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
   const offers = useOutletContext<Offers>();
 
   const handleCardHover = (offer: Offer | null) => {
@@ -105,7 +107,9 @@ export function MainPage() {
               <OffersList offers={offers} onCardHover={handleCardHover}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={AMSTERDAM_CITY} offers={offers} selectedOffer={activeOffer} />
+              </section>
             </div>
           </div>
         </div>
